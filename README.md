@@ -62,3 +62,7 @@ external_components:
   refresh: 30s
   components: [ ntp_server, ntp_server_info, time ]
 ```
+
+## Limitations
+
+- SNTP will not show as a time source because it does not call the synchronize_epoch() function in ESPHome. It will still set the time correctly for the NTP server
