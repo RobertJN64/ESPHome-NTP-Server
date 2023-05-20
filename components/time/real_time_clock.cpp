@@ -28,13 +28,15 @@ void RealTimeClock::call_setup() {
 void RealTimeClock::synchronize_epoch_(uint32_t epoch) {
 
   const char *comp_source = this->get_component_source();
+  ESP_LOGD(TAG, "Sync epoch from");
+  ESP_LOGD(TAG, comp_source);
   lastTimeSource = comp_source;
   time_t old_epoch = now().timestamp;
 
   bool new_source = true;
   for (int i = 0; i < timeSourceC; i++) {
     TimeDelta tD = timeDelta[timeSourceC];
-    if (strcmp(tD.source, comp_source)) {
+    if (tD.source == comp_source) {
       new_source = false;
       tD.delta = 0;
     } else {

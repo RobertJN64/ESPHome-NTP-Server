@@ -1,7 +1,5 @@
 #include "esphome.h"
 
-#include <TimeLib.h> // Time functions  https://github.com/PaulStoffregen/Time
-
 WiFiUDP Udp;
 
 #define NTP_PORT 123
@@ -91,18 +89,10 @@ void processNTP() {
     packetBuffer[10] = 0xC;
     packetBuffer[11] = 0;
 
-    // int year;
-    // byte month, day, hour, minute, second, hundredths;
-    // unsigned long date, time, age;
-    uint32_t timestamp, tempval;
-    time_t t = now();
-
-    // gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &age);
-    // timestamp = numberOfSecondsSince1900Epoch(year,month,day,hour,minute,second);
-
-    // timestamp = numberOfSecondsSince1900Epoch(year(t), month(t), day(t), hour(t), minute(t), second(t));
-    //  Better, less verbose, more elegant timestamp calculation, suggested by cheise @ Github - 20230206
-    timestamp = t + seventyYears;
+    uint32_t tempval;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    time_t timestamp = tv.tv_sec + seventyYears; // unix to utc
 
 #ifdef DEBUG
     Serial.println(timestamp);
