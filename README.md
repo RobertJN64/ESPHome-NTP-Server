@@ -17,6 +17,10 @@ gps:
 
 ntp_server:
 
+time:
+  - platform: gps
+    id: gps_time
+
 external_components:
   source:
     type: git
