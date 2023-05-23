@@ -29,7 +29,7 @@ void RealTimeClock::synchronize_epoch_(uint32_t epoch) {
 
   const char *comp_source = this->get_component_source();
   ESP_LOGD(TAG, "Sync epoch from");
-  ESP_LOGD(TAG, comp_source);
+  ESP_LOGD(TAG, "%s", comp_source);
   lastTimeSource = comp_source;
   time_t old_epoch = now().timestamp;
 
