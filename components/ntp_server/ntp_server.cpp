@@ -64,18 +64,20 @@ void processNTP() {
     Serial.println();
 #endif
 
+    uint32_t tempval;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    time_t timestamp = tv.tv_sec + seventyYears; // unix to utc
+
     packetBuffer[0] = 0b00100100; // LI, Version, Mode
-    // TODO - set stratum correctly
 
-    // if (gpsLocked) {
-    //   packetBuffer[1] = 1; // stratum 1 if synced with GPS
-    // } else {
-    //   packetBuffer[1] = 16; // stratum 16 if not synced
-    // }
-    packetBuffer[1] = 1; // for now - force sync
+    if (tv.tv_sec < seventyYears / 2) {
+      packetBuffer[1] = 16; // for now - force sync
+      Serial.println("NTP Server likely has bad time (year is not recent) - setting stratum to 16 to block sync.")
+    } else {
+      packetBuffer[1] = 4; // recommended because accuracy is limited to nearest second
+    }
 
-    // think that should be at least 4 or so as you do not use fractional seconds
-    // packetBuffer[1] = 4;    // stratum
     packetBuffer[2] = 6;    // polling minimum
     packetBuffer[3] = 0xFA; // precision
 
@@ -88,11 +90,6 @@ void processNTP() {
     packetBuffer[9] = 0;
     packetBuffer[10] = 0xC;
     packetBuffer[11] = 0;
-
-    uint32_t tempval;
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    time_t timestamp = tv.tv_sec + seventyYears; // unix to utc
 
 #ifdef DEBUG
     Serial.println(timestamp);

@@ -14,7 +14,7 @@
 namespace esphome {
 namespace time {
 
-const char *lastTimeSource = "No Time Source";
+const char *lastTimeSource = "Local RTC";
 int timeSourceC = 0; // how many time sources
 TimeDelta timeDelta[MAX_TIME_SOURCE_N] = {};
 
