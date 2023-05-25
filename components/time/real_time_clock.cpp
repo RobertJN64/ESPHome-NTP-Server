@@ -40,7 +40,7 @@ void RealTimeClock::synchronize_epoch_(uint32_t epoch) {
       new_source = false;
       tD.delta = 0;
     } else {
-      tD.delta += (epoch - old_epoch);
+      tD.delta += (old_epoch - epoch); // if new timestamp is newer, delta should be negative
     }
   }
   if (new_source) {
