@@ -15,7 +15,7 @@ void NTPServoInfo::update() {
   gettimeofday(&tv, NULL);
   time_t timestamp = tv.tv_sec;
   esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
-  state << "\nSystem has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
+  state << "\n System has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
 
   for (int i = 0; i < esphome::time::timeSourceC; i++) {
     esphome::time::TimeDelta td = esphome::time::timeDelta[i];
@@ -25,7 +25,7 @@ void NTPServoInfo::update() {
     time_t timestamp = tv.tv_sec + td.delta;
 
     esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
-    state << '\n ' << td.source << " has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
+    state << "\n " << td.source << " has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
   }
 
   this->publish_state(state.str());
