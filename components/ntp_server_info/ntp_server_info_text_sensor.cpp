@@ -11,6 +11,12 @@ void NTPServoInfo::update() {
   std::stringstream state;
   state << "Last system time source: " << esphome::time::lastTimeSource;
 
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  time_t timestamp = tv.tv_sec;
+  esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
+  state << "\nSystem has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
+
   for (int i = 0; i < esphome::time::timeSourceC; i++) {
     esphome::time::TimeDelta td = esphome::time::timeDelta[i];
 
@@ -19,12 +25,7 @@ void NTPServoInfo::update() {
     time_t timestamp = tv.tv_sec + td.delta;
 
     esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
-
-    state << "\n Source: " << td.source << " has time: ";
-
-    state << "\n Source: " << td.source << " has time: ";
-    state << (u16_t)timeinfo.year << "-" << (u16_t)timeinfo.month << "-" << (u16_t)timeinfo.day_of_month << " ";
-    state << (u16_t)timeinfo.hour << ":" << (u16_t)timeinfo.minute << ":" << (u16_t)timeinfo.second;
+    state << '\n ' << td.source << " has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
   }
 
   this->publish_state(state.str());
