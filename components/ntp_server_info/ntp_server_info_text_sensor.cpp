@@ -23,8 +23,8 @@ void NTPServoInfo::update() {
     state << "\n Source: " << td.source << " has time: ";
 
     state << "\n Source: " << td.source << " has time: ";
-    state << (uint_16)timeinfo.year << "-" << (uint_16)timeinfo.month << "-" << (uint_16)timeinfo.day_of_month << " ";
-    state << (uint_16)timeinfo.hour << ":" << (uint_16)timeinfo.minute << ":" << (uint_16)timeinfo.second;
+    state << (u16_t)timeinfo.year << "-" << (u16_t)timeinfo.month << "-" << (u16_t)timeinfo.day_of_month << " ";
+    state << (u16_t)timeinfo.hour << ":" << (u16_t)timeinfo.minute << ":" << (u16_t)timeinfo.second;
   }
 
   this->publish_state(state.str());
