@@ -73,7 +73,7 @@ void processNTP() {
 
     if (tv.tv_sec < seventyYears / 2) {
       packetBuffer[1] = 16; // for now - force sync
-      Serial.println("NTP Server likely has bad time (year is not recent) - setting stratum to 16 to block sync.")
+      Serial.println("NTP Server likely has bad time (year is not recent) - setting stratum to 16 to block sync.");
     } else {
       packetBuffer[1] = 4; // recommended because accuracy is limited to nearest second
     }
