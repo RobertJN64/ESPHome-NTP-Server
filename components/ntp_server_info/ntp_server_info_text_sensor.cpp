@@ -15,7 +15,7 @@ void NTPServoInfo::update() {
   gettimeofday(&tv, NULL);
   time_t timestamp = tv.tv_sec;
   esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
-  state << "\n System has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
+  state << "\n Local RTC has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
 
   for (int i = 0; i < esphome::time::timeSourceC; i++) {
     esphome::time::TimeDelta td = esphome::time::timeDelta[i];
