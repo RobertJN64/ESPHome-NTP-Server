@@ -21,8 +21,10 @@ void NTPServoInfo::update() {
     esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
 
     state << "\n Source: " << td.source << " has time: ";
-    state << timeinfo.year << "-" << timeinfo.month << "-" << timeinfo.day_of_month << " ";
-    state << timeinfo.hour << ":" << timeinfo.minute << ":" << timeinfo.second;
+
+    state << "\n Source: " << td.source << " has time: ";
+    state << (uint_16)timeinfo.year << "-" << (uint_16)timeinfo.month << "-" << (uint_16)timeinfo.day_of_month << " ";
+    state << (uint_16)timeinfo.hour << ":" << (uint_16)timeinfo.minute << ":" << (uint_16)timeinfo.second;
   }
 
   this->publish_state(state.str());
