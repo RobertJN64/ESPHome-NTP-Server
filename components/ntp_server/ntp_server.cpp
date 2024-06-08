@@ -12,7 +12,7 @@ byte packetBuffer[NTP_PACKET_SIZE];
 const unsigned long seventyYears = 2208988800UL; // to convert unix time to epoch
 
 namespace esphome {
-namespace captive_portal {
+namespace ntp_server {
 
 
 void startNTP() {
