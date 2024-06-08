@@ -1,5 +1,5 @@
 #include "esphome.h"
-#include <WiFi.h>
+#include <wifi_component.h>
 #include <WiFiUdp.h>
 
 WiFiUDP Udp;
@@ -101,7 +101,7 @@ void processNTP() {
     tempval = timestamp;
 
     // Set refid to IP address if not locked
-    IPAddress myIP = WiFi.localIP();
+    IPAddress myIP = esphome::wifi::WiFiComponent::get_ip_addresses[0];
     packetBuffer[12] = myIP[0];
     packetBuffer[13] = myIP[1];
     packetBuffer[14] = myIP[2];
