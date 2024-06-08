@@ -11,6 +11,10 @@ byte packetBuffer[NTP_PACKET_SIZE];
 
 const unsigned long seventyYears = 2208988800UL; // to convert unix time to epoch
 
+namespace esphome {
+namespace captive_portal {
+
+
 void startNTP() {
   Udp.begin(NTP_PORT);
 }
@@ -101,7 +105,7 @@ void processNTP() {
     tempval = timestamp;
 
     // Set refid to IP address if not locked
-    IPAddress myIP = esphome::wifi::global_wifi_component::get_ip_addresses()[0];
+    IPAddress myIP = wifi::global_wifi_component::get_ip_addresses()[0];
     packetBuffer[12] = myIP[0];
     packetBuffer[13] = myIP[1];
     packetBuffer[14] = myIP[2];
@@ -166,9 +170,6 @@ void processNTP() {
     Udp.endPacket();
   }
 }
-
-namespace esphome {
-namespace ntp_server {
 
 void NTP_Server::setup() {
 }
