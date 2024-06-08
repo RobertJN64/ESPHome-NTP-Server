@@ -1,3 +1,6 @@
+// ROBERTJN64TIME
+// Modified to allow ntp debug info
+
 #include "real_time_clock.h"
 #include "esphome/core/log.h"
 #ifdef USE_HOST
@@ -18,6 +21,10 @@
 namespace esphome {
 namespace time {
 
+const char *lastTimeSource = "Local RTC";
+int timeSourceC = 0; // how many time sources
+TimeDelta timeDelta[MAX_TIME_SOURCE_N] = {};
+
 static const char *const TAG = "time";
 
 RealTimeClock::RealTimeClock() = default;
@@ -26,6 +33,33 @@ void RealTimeClock::call_setup() {
   PollingComponent::call_setup();
 }
 void RealTimeClock::synchronize_epoch_(uint32_t epoch) {
+
+  const char *comp_source = this->get_component_source();
+  ESP_LOGD(TAG, "Sync epoch from");
+  ESP_LOGD(TAG, "%s", comp_source);
+  lastTimeSource = comp_source;
+  time_t old_epoch = now().timestamp;
+
+  bool new_source = true;
+  for (int i = 0; i < timeSourceC; i++) {
+    TimeDelta tD = timeDelta[timeSourceC];
+    if (tD.source == comp_source) {
+      new_source = false;
+      tD.delta = 0;
+    } else {
+      tD.delta += (old_epoch - epoch); // if new timestamp is newer, delta should be negative
+    }
+  }
+  if (new_source) {
+    TimeDelta nTimeDelta;
+    nTimeDelta.source = comp_source;
+    nTimeDelta.delta = 0;
+    timeDelta[timeSourceC] = nTimeDelta;
+    timeSourceC += 1;
+  }
+
+
+
   // Update UTC epoch time.
   struct timeval timev {
     .tv_sec = static_cast<time_t>(epoch), .tv_usec = 0,

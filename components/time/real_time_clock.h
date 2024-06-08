@@ -10,6 +10,19 @@
 namespace esphome {
 namespace time {
 
+// ROBERTJN64 addition
+#define MAX_TIME_SOURCE_N 16
+
+struct TimeDelta {
+  const char *source;
+  int delta;
+};
+
+extern const char *lastTimeSource;
+extern int timeSourceC; // how many time sources
+extern TimeDelta timeDelta[MAX_TIME_SOURCE_N];
+// end modifications
+
 /// The RealTimeClock class exposes common timekeeping functions via the device's local real-time clock.
 ///
 /// \note
