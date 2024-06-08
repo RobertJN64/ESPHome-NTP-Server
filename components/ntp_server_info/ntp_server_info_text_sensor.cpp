@@ -14,7 +14,7 @@ void NTPServoInfo::update() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   time_t timestamp = tv.tv_sec;
-  esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
+  esphome::ESPTime timeinfo = esphome::ESPTime::from_epoch_local(timestamp);
   state << "\n Local RTC has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
 
   for (int i = 0; i < esphome::time::timeSourceC; i++) {
@@ -24,7 +24,7 @@ void NTPServoInfo::update() {
     gettimeofday(&tv, NULL);
     time_t timestamp = tv.tv_sec + td.delta;
 
-    esphome::time::ESPTime timeinfo = esphome::time::ESPTime::from_epoch_local(timestamp);
+    esphome::ESPTime timeinfo = esphome::ESPTime::from_epoch_local(timestamp);
     state << "\n " << td.source << " has time: " << timeinfo.strftime("%Y-%m-%d %H:%M:%S");
   }
 
