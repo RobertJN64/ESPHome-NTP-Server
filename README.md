@@ -3,6 +3,7 @@
 Adds NTP capabilities to the ESPHome platform.
 
 ** Fixed duplicate sources in "NTP Server info"
+** Fixed Ethernet/Wifi compatibility
 
 ## Basic Usage
 
