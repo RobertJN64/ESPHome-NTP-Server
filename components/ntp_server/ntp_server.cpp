@@ -113,7 +113,7 @@ void processNTP() {
     #ifdef USE_WIFI
     IPAddress myIP = wifi::global_wifi_component->get_ip_addresses()[0];
     #else
-    IPAddress myIP = ethernet::global_ethernet_component->get_ip_addresses()[0];
+    IPAddress myIP = ethernet::global_eth_component->get_ip_addresses()[0];
     #endif
     packetBuffer[12] = myIP[0];
     packetBuffer[13] = myIP[1];
