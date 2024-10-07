@@ -3,7 +3,7 @@ import esphome.config_validation as cv
 from esphome.const import CONF_ID, CONF_TIME
 
 CODEOWNERS = ["@RobertJN64"]
-DEPENDENCIES = ["time"]
+DEPENDENCIES = ["time", "network"]
 
 ntp_server_ns = cg.esphome_ns.namespace("ntp_server")
 NTP_Server = ntp_server_ns.class_("NTP_Server", cg.Component)
