@@ -42,7 +42,7 @@ void RealTimeClock::synchronize_epoch_(uint32_t epoch) {
 
   bool new_source = true;
   for (int i = 0; i < timeSourceC; i++) {
-    TimeDelta tD = timeDelta[timeSourceC];
+    TimeDelta tD = timeDelta[i];
     if (tD.source == comp_source) {
       new_source = false;
       tD.delta = 0;
