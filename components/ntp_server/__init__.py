@@ -18,5 +18,7 @@ CONFIG_SCHEMA = cv.All(
 )
 
 async def to_code(config):
+    cg.add_library("WiFi", None)
+    cg.add_library("Network", None)
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
